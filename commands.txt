@@ -20,3 +20,5 @@ Request         > php artisan make:request TypeprocessRequest
 Request         > php artisan make:request UserRequest
 Request         > php artisan make:request RoleRequest
 Request         > php artisan make:request RadicationRequest
+
+Storage         > php artisan storage:link
