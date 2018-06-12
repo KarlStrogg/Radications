@@ -1,0 +1,22 @@
+Install Laravel > composer global require "laravel/installer"
+Create project  > laravel new Radications
+Run app         > php artisan serve
+Migration       > php artisan make:migration create_type_process_table --create=typesprocess
+Migration       > php artisan make:migration create_radications_table --create=radications
+Migration       > php artisan make:migration create_roles_table --create=roles
+Migration       > php artisan migrate
+
+Models          > php artisan make:model Typeprocess
+Models          > php artisan make:model Role
+Models          > php artisan make:model Radication
+Auth            > php artisan make:auth
+
+Controller      > php artisan make:controller TypesprocessController --resources
+Controller      > php artisan make:controller UsersController --resources
+Controller      > php artisan make:controller RolesController --resources
+Controller      > php artisan make:controller RadicationsController --resources
+
+Request         > php artisan make:request TypeprocessRequest
+Request         > php artisan make:request UserRequest
+Request         > php artisan make:request RoleRequest
+Request         > php artisan make:request RadicationRequest
