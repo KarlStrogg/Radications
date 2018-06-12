@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Role;
+use App\User;
 use Laracasts\Flash\Flash;
 use App\Http\Requests\RoleRequest;
 use App\Http\Requests\RoleEditRequest;
@@ -107,10 +108,19 @@ class RolesController extends Controller
      */
     public function destroy($id)
     {
-        $role = Role::find($id);
-        $role->delete();
+        $user = User::Where('role_id', $id)->count();
 
-        Flash::error("Registry successfully deleted: {$role->name}");
+        if($user > 0)
+        {
+            Flash::error("It is not possible to delete the record since it is in use");
+        }
+        else
+        {
+            $role = Role::find($id);
+            $role->delete();
+
+            Flash::error("Registry successfully deleted: {$role->name}");
+        }
 
         return redirect()->route('roles.index');
     }
