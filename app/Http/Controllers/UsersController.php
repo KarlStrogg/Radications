@@ -7,6 +7,7 @@ use Laracasts\Flash\Flash;
 
 use App\User;
 use App\Role;
+use App\Radication;
 
 class UsersController extends Controller
 {
@@ -121,10 +122,19 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
-        $user->delete();
+        $radication = Radication::Where('user_id', $id)->count();
 
-        Flash::error("Registry successfully deleted: {$user->name}");
+        if($radication > 0)
+        {
+            Flash::error("It is not possible to delete the record since it is in use");
+        }
+        else
+        {
+            $user = User::find($id);
+            $user->delete();
+
+            Flash::error("Registry successfully deleted: {$user->name}");
+        }
 
         return redirect()->route('users.index');
     }

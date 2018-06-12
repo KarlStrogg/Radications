@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Typeprocess;
+use App\Radication;
+
 use Laracasts\Flash\Flash;
 use App\Http\Requests\TypeprocessRequest;
 use App\Http\Requests\TypeprocessEditRequest;
@@ -114,10 +116,19 @@ class TypesprocessController extends Controller
      */
     public function destroy($id)
     {
-        $typeprocess = Typeprocess::find($id);
-        $typeprocess->delete();
+        $radication = Radication::Where('typeproc_id', $id)->count();
 
-        Flash::error("Registry successfully deleted: {$typeprocess->name}");
+        if($radication > 0)
+        {
+            Flash::error("It is not possible to delete the record since it is in use");
+        }
+        else
+        {
+            $typeprocess = Typeprocess::find($id);
+            $typeprocess->delete();
+
+            Flash::error("Registry successfully deleted: {$typeprocess->name}");
+        }
 
         return redirect()->route('typesprocess.index');
     }
